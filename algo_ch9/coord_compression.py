@@ -1,7 +1,6 @@
 import sys
 n = int(sys.stdin.readline())
 x = list(map(int, sys.stdin.readline().split()))
-
 tbl = []
 for i in range(len(x)) :
     tbl.append([x[i], i, 0])

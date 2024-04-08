@@ -9,4 +9,4 @@ for i in range(1, n) :
     for j in range(1, 9) :
         tbl[i][j] = tbl[i-1][j-1] + tbl[i-1][j+1]
 
-print(sum(tbl[n-1]))
+print(sum(tbl[n-1]) % (10**9))
