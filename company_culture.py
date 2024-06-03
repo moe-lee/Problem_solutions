@@ -28,6 +28,7 @@ def solve() :
     
     for _ in range(m) :
         senior_number, cnt = map(int, sys.stdin.readline().split())
+        # 칭찬을 여러번 받을 경우를 고려해야한다.
         praise_cnt[senior_number] += cnt
     
     bfs(tree, praise_cnt, 1)
