@@ -1,5 +1,5 @@
 import sys
-from collections import deque
+sys.setrecursionlimit(50000)
 
 def solve() :
     n, m = map(int, sys.stdin.readline().split())
@@ -44,3 +44,14 @@ def solve() :
         print(years-1)
     return
 solve()
+
+def LCA(root, p, q) :
+    if root == None :
+        return None
+    left = LCA(root.left, p, q)
+    right = LCA(root.right, p, q)
+    if root == p or root == q :
+        return root
+    elif left and right :
+        return root
+    return left or right

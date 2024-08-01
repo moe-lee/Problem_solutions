@@ -1,4 +1,7 @@
 from collections import deque
+
+import heapq
+
 def BFS(graph, start_v) :
     queue = deque(start_v)
     visited = [start_v]
@@ -53,3 +56,61 @@ grid = [
 ]
 
 shortestPathBinaryMatrix(grid)
+
+
+def BFS(graph, start) :
+    queue = deque()
+    visited = [False] * len(graph)
+    queue.append(start)
+    visited[start] = True
+    
+    while queue :
+        cur_v = queue.popleft()
+        for nv in graph[cur_v] :
+            if not visited[nv] :
+                visited[nv] = True
+                queue.append(nv)
+
+def DFS(graph, visited, cur_v) :
+    for nv in graph[cur_v] :
+        if nv not in visited :
+            visited.append(nv)
+            visited = DFS(graph, visited=visited, cur_v=nv)
+    return visited
+
+def dijkstra(graph, start, final, n) :
+    pq = []
+    costs = {}
+    heapq.heappush(pq, (0, start))
+    while pq :
+        cc, cv = heapq.heappop(pq)
+        if cv not in costs :
+            costs[cv] = cc
+            for cost, nv in graph[cv] :
+                nc = cost + cc
+                heapq.heappush(pq, (nc, nv))
+    return costs[final]
+
+def bellemFord(edges, start, final, n) :
+    costs = [float('inf')] * n
+    for _ in range(n) :
+        for u, v, w in edges :
+            if costs[v] > costs[u] + w :
+                costs[v] = costs[u] + w
+    
+    for u, v, w in edges :
+        if costs[v] > costs[u] + w :
+            raise Exception('음수 사이클')
+    return costs[final]
+
+
+def floydWashallEx(edges, n) :
+    dist = [[float('inf') for _ in range(n+1)] for _ in range(n+1)]
+    for u, v, w in edges :
+        dist[u][v] = w
+    
+    for k in range(1, n + 1) :
+        for i in range(1, n + 1) :
+            for j in range(1, n + 1) :
+                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+    print(dist)
