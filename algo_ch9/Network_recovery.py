@@ -8,7 +8,7 @@ def solve() :
         u, v, c = map(int, sys.stdin.readline().split())
         graph[u].append((c, v))
         graph[v].append((c, u))
-
+    
     next_vertex = [[] for _ in range(N+1)]
     costs = {}
     cnt = 0
