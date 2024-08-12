@@ -1,36 +1,20 @@
 import sys
-import heapq
-# 일반적인 DP 접근법을 위해 입력을 선형적으로 적용시켜보기
+from collections import deque
+from collections import defaultdict
+# graph.순회도 아니고.. Longest Increasing Subsequence algorithm을 적용해야함.
 def solve() :
+    ## 어떻게 적용할 수 있을까..
+    # 많이 겹치는 전깃줄을 제거해보며 가장 적은 수를 센다 -> 하나씩 전깃줄을 배치하며 겹치지 않고 둘 수 있는 최고 값을 찾는다.
     N = int(sys.stdin.readline())
-    wires = [0 for _ in range(501)]
-    cross_info = [[0, []] for _ in range(501)]
-    for _ in range(N) : # 100회
-        u, v = map(int, sys.stdin.readline().split())
-        wires[u] = v
-    pq = []
-    for i in range(1, 501) : # 2.5e+5회
-        if wires[i] != 0 :
-            cnt = 0
-            for j in range(1, 501) :
-                if wires[j] != 0 and (i - j) * (wires[i] - wires[j]) < 0 :
-                    cnt += 1
-                    cross_info[i][1].append(j)
-            cross_info[i][0] = cnt
-            heapq.heappush(pq, (-cnt, i))
-    ans = 0
-    removed = [False] * (501)
-    while pq :
-        cnt, cur_port = heapq.heappop(pq)
-        cnt = -cnt
-        if cross_info[cur_port][0] == cnt and cross_info[cur_port][0] > 0 :
-            ans += 1
-            removed[cur_port] = True
-            for np in cross_info[cur_port][1] :
-                if not removed[np] :
-                    cross_info[np][0] -= 1
-                    heapq.heappush(pq, (-1 * cross_info[np][0], np))
-    print(ans)
+    wires = [list(map(int ,sys.stdin.readline().split())) for _ in range(N)]
+    wires.sort(key=lambda x : x[0])
+    ans = [1] * (N)
+    for k in range(1, N) :
+        for j in range(0, k) :
+            if wires[k][1] > wires[j][1] :
+                ans[k] = max(ans[k], ans[j] + 1)
+    print(N-max(ans))
+    return
 solve()
 
 
