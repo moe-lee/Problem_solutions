@@ -30,5 +30,30 @@ def solve() :
         for j in range(1, n+1) :
             print(route_tbl[j] if j != i else '-', end=" ")
         print()
+
+import sys
+def solve2() :
+    n, m = map(int, sys.stdin.readline().split())
+    DP = [[float('inf') for _ in range(m+1)] for _ in range(n+1)]
+    visited = [[0 for _ in range(m+1)] for _ in range(n+1)]
+    for _ in range(m) :
+        u, v, c = map(int, sys.stdin.readline().split())
+        DP[u][v] = c
+        DP[v][u] = c
+        visited[u][v] = v
+        visited[v][u] = u
     
-solve()
+    for k in range(1, n+1) :
+        for i in range(1, n+1) :
+            for j in range(1, n+1) :
+                if DP[i][j] > DP[i][k] + DP[k][j]:
+                    DP[i][j] = DP[i][k] + DP[k][j]
+                    visited[i][j] = visited[i][k]
+    
+    for i in range(1,n+1):
+        for j in range(1, n+1) :
+            print((visited[i][j] if j != i else "-"), end=" ")
+        print()
+
+    
+solve2()

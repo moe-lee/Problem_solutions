@@ -1,19 +1,35 @@
-import sys
 
 def solve() :
-    s1 = sys.stdin.readline().strip('\n')
-    s2 = sys.stdin.readline().strip('\n')
-    sc_tbl = [0] * 1000
-    for i in range(len(s1)) :
-        j = len(s2) - 1
-        while j >= 0 : 
-            if s2[j] == s1[i] :
-                k = j - 1
-                # 같은 문자로 이전 인덱스에 증가시킨 값을 이용하지 않기 위해 끝에서부터 처리한다.
-                while k >= 0 and sc_tbl[k] == 0 : k-=1
-                sc_tbl[j] = max(sc_tbl[j], 1 + (0 if k < 0 else sc_tbl[k]))
-            j -= 1
-    print(max(sc_tbl))
+    s1 = input()
+    s2 = input()
+    dp = [0] * len(s2)
+    for i in range(0, len(s1)) :
+        prev_max = 0
+        for j in range(0, len(dp)) :
+            cur_max = max(prev_max, dp[j])
+            if s1[i] == s2[j] :
+                dp[j] = prev_max + 1
+            prev_max = cur_max
+    print(max(dp))
+solve()
 
-if __name__ == "__main__" :
-    solve()
+'''
+KKKXXXABCFFF
+ABCKKKRRRFFF
+
+ABCKKKRRRFFF
+KKKXXXABCFFF
+
+ABCKKKRRRFFF
+ABCRF
+
+ABCRF
+ABCKKKRRRFFF
+
+HELLOWORLD
+OWOLR
+
+
+OWOLR
+HELLOWORLD
+'''

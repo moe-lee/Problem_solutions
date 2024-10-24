@@ -11,7 +11,7 @@ def solve() :
             if i - coin >= 0 :
                 dp[i] += dp[i-coin]
     print(dp[M])
-
+    
 T = int(sys.stdin.readline())
 for _ in range(T) :
     solve()

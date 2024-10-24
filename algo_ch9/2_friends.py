@@ -14,4 +14,5 @@ def solve():
     for i in freinds :
         max_freinds = max(max_freinds, n - (i.count('N')))
     print(max_freinds)
+
 solve()
